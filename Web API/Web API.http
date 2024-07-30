@@ -1,0 +1,32 @@
+@Web_API_HostAddress = http://localhost:5121
+
+POST {{Web_API_HostAddress}}/add/
+Content-Type: application/json
+
+{
+  "dataDLH": [
+    {
+      "lesson": "Геометрия",
+      "homework": "Феденко Ф405, 407 555(а, б)",
+      "numberLesson": 5
+    },
+    {
+      "lesson": "Алгебра",
+      "homework": "Феденко Ф405, 407 555(а, б)",
+      "numberLesson": 4
+    },
+    {
+      "lesson": "Матанализ",
+      "homework": "Весь демидович :3",
+      "numberLesson": 1
+    }
+  ]
+}
+
+###
+
+
+GET {{Web_API_HostAddress}}/getall/
+Accept: application/json
+
+

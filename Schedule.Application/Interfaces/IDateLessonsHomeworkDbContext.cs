@@ -7,6 +7,5 @@ public interface IDateLessonsHomeworkDbContext
 {
     DbSet<DateLessonsHomeworkDto> Dates { get; set; }
     DbSet<LessonHomeworkDto> Lessons { get; set; }
-    
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

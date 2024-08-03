@@ -26,7 +26,32 @@ Content-Type: application/json
 ###
 
 
-GET {{Web_API_HostAddress}}/getall/
+GET {{Web_API_HostAddress}}/api/getall/
 Accept: application/json
+
+###
+
+POST {{Web_API_HostAddress}}/api/add/
+Content-Type: application/json
+
+{
+  "dataDLH": [
+    {
+      "lesson": "Геометрия",
+      "homework": "Феденко Ф405, 407 555(а, б)",
+      "numberLesson": 5
+    },
+    {
+      "lesson": "Алгебра",
+      "homework": "Феденко Ф405, 407 555(а, б)",
+      "numberLesson": 4
+    },
+    {
+      "lesson": "Матанализ",
+      "homework": "Весь демидович :3",
+      "numberLesson": 1
+    }
+  ]
+}
 
 

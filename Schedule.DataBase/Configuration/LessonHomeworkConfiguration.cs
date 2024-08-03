@@ -15,7 +15,7 @@ public class LessonHomeworkConfiguration : IEntityTypeConfiguration<LessonHomewo
         builder.Property(lh => lh.Lesson);
         builder.Property(lh => lh.NumberLesson);
         builder.HasOne(lh => lh.DateLessonsHomework)
-            .WithMany(dlh => dlh.DataDLH)
+            .WithMany(dlh => dlh.DataDlh)
             .HasForeignKey(lh => lh.DateId);
     }
 }

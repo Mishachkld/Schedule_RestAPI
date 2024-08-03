@@ -12,7 +12,7 @@ public class DateLessonsHomeworkConfiguration : IEntityTypeConfiguration<DateLes
         builder.HasKey(dlh => dlh.Id);
         builder.HasIndex(dlh => dlh.Id).IsUnique();
         builder.Property(dlh => dlh.Day);
-        builder.HasMany(d => d.DataDLH)
+        builder.HasMany(d => d.DataDlh)
             .WithOne(l => l.DateLessonsHomework)
             .HasForeignKey(l => l.DateId)
             .OnDelete(DeleteBehavior.Cascade);

@@ -11,6 +11,6 @@ public class DateLessonsHomeworkDto
     public Guid Id { get; set; }
     [Column("day")]
     public DateTime Day { get; set; }
-    public List<LessonHomeworkDto> DataDLH { get; set; }
+    public List<LessonHomeworkDto> DataDlh { get; set; }
 }
 

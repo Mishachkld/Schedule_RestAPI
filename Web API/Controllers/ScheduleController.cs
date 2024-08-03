@@ -3,29 +3,32 @@ using Schedule.Application.Dto.WebDto;
 using Schedule.Application.Interfaces;
 
 namespace Web_API.Controllers;
+
 [ApiController]
-[Route("api/[action]")]
+[Route("api/", Name = "Schedule REST API")]
 public class ScheduleController : Controller
 {
     private readonly IRepository _repository;
     public ScheduleController(IRepository repository) => _repository = repository;
 
-    [HttpGet]
+    [HttpGet("getall")]
     public async Task<IActionResult> GetAll()
     {
         var elements = await _repository.GetAll();
-        if (elements != null && elements.Count != 0)
-        {
-            return Ok(elements);
-        }
-        return NotFound();
+        return Ok(elements);
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public async Task<IActionResult> Add([FromBody] DateLessonsHomeworkWebDto requestItem)
     {
         var idItem = await _repository.AddAsync(requestItem);
         return Ok(idItem);
     }
-    
+
+    [HttpGet("get")]
+    public async Task<IActionResult> Get(DateTime date)
+    {
+        var itemByTime = await _repository.GetByDate(date);
+        return Ok(itemByTime);
+    }
 }

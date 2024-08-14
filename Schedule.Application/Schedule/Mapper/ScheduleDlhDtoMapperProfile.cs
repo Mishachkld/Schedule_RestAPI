@@ -8,7 +8,7 @@ public class ScheduleDlhDtoMapperProfile : Profile
 {
     public ScheduleDlhDtoMapperProfile()
     {
-        CreateMap<DateLessonsHomeworkDto, DateLessonsHomeworkWebDto>().ReverseMap()
+        CreateMap<DateLessonsHomeworkDb, DateLessonsHomeworkWebDto>().ReverseMap()
             .ForMember(dthDb => dthDb.Day,
                 expression => expression.MapFrom(dtoWeb => dtoWeb.Day))
             .ForMember(dthDb => dthDb.Id, 

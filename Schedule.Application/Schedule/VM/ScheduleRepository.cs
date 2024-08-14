@@ -36,12 +36,11 @@ public class ScheduleRepository : IRepository
     {
         // todo нужно переделать, т.к. вытасиквается вся БД, а нам нужно сначала отобрать нужные элементы, а потом уже их вытягивать из БД
         var allItemsFromDb = await _dbContext.Dates.Include(dlhDb => dlhDb.DataDlh)
-            .ToListAsync();
-        var getItemsFromDb = allItemsFromDb.FindAll(key => key.Day == time);
+            .Where(dlhDto => dlhDto.Day.Equals(time)).ToListAsync();
         List<DateLessonsHomeworkWebDto> dlhWeb = null;
-        if (getItemsFromDb != null)
+        if (allItemsFromDb != null)
         {
-            dlhWeb = IMapWith.WebDtoList(_mapper, getItemsFromDb);
+            dlhWeb = IMapWith.WebDtoList(_mapper, allItemsFromDb);
         }
 
         return dlhWeb;
@@ -55,12 +54,12 @@ public class ScheduleRepository : IRepository
         return IMapWith.WebDto(_mapper, getItemFromDb);
     }
 
-    public void Delete(DateLessonsHomeworkWebDto deleteItem)
+    public void Update(DateLessonsHomeworkWebDto updateItem)
     {
         // TODO
     }
 
-    public void Update(DateLessonsHomeworkWebDto updateItem)
+    public void Delete(DateLessonsHomeworkWebDto deleteItem)
     {
         // TODO
     }

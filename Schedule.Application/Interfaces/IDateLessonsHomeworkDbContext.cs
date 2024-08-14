@@ -5,7 +5,7 @@ namespace Schedule.Application.Interfaces;
 
 public interface IDateLessonsHomeworkDbContext
 {
-    DbSet<DateLessonsHomeworkDto> Dates { get; set; }
-    DbSet<LessonHomeworkDto> Lessons { get; set; }
+    DbSet<DateLessonsHomeworkDb> Dates { get; set; }
+    DbSet<LessonHomeworkDb> Lessons { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

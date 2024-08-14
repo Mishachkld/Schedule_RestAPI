@@ -1,20 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Schedule.Application.Dto;
 using Schedule.Application.Dto.WebDto;
 using Schedule.Application.Interfaces;
-using Schedule.DataBase;
 
-namespace Web_API.EndPoint;
+namespace Web_API.EndPoints;
 
 public class RestApiEndPoints
 {
     public static void Map(WebApplication app)
     {
         app.MapGet("/getall",
-            async (HttpContext context, DateLessonHomeworkDbContext dbContext, IRepository repository) =>
+            async (HttpContext context, IRepository repository) =>
             {
-                // TODO убрать это из класса и переделать отправку, используя DateLessonHomeworkWebDto
                 var list = await repository.GetAll();
                 await context.Response.WriteAsJsonAsync(list);
             });

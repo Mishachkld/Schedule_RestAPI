@@ -10,12 +10,12 @@ public static class DependenceInjection
     public static IServiceCollection AddProperties(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration["DbConnection"];
-        services.AddDbContext<DateLessonHomeworkDbContext>(options =>
+        services.AddDbContext<ScheduleDbContext>(options =>
         {
             options.UseSqlite(connectionString);
             options.EnableSensitiveDataLogging();
         }); 
-        services.AddScoped<IDateLessonsHomeworkDbContext>(provider => provider.GetService<DateLessonHomeworkDbContext>());
+        services.AddScoped<IDateLessonsHomeworkDbContext>(provider => provider.GetService<ScheduleDbContext>());
         return services;
     }
 }

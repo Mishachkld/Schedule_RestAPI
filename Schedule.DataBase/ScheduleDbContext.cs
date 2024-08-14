@@ -6,12 +6,12 @@ using Schedule.Application.Dto;
 
 namespace Schedule.DataBase;
 
-public class DateLessonHomeworkDbContext : DbContext, IDateLessonsHomeworkDbContext
+public class ScheduleDbContext : DbContext, IDateLessonsHomeworkDbContext
 {
-    public DbSet<DateLessonsHomeworkDto> Dates { get; set; }
-    public DbSet<LessonHomeworkDto> Lessons { get; set; }
+    public DbSet<DateLessonsHomeworkDb> Dates { get; set; }
+    public DbSet<LessonHomeworkDb> Lessons { get; set; }
 
-    public DateLessonHomeworkDbContext(DbContextOptions<DateLessonHomeworkDbContext> configuration) : base(
+    public ScheduleDbContext(DbContextOptions<ScheduleDbContext> configuration) : base(
         configuration)
     {
         Database.EnsureCreated(); 

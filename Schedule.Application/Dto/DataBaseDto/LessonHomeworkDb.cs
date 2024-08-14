@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Schedule.Application.Dto;
 
 [Table("lesson_homework")]
-public class LessonHomeworkDto
+public class LessonHomeworkDb
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -17,15 +17,5 @@ public class LessonHomeworkDto
     public int NumberLesson { get; set; }
     [ForeignKey("Id")]
     public Guid DateId { get; set; }
-    public DateLessonsHomeworkDto DateLessonsHomework { get; set; }
-
-    public override string ToString()
-    {
-        var str = "{" +
-                  $@"""lesson"" : ""{Lesson}"",
-                    ""homework"": ""{Homework}"",
-                    ""numberLesson"":""{NumberLesson}""" +
-                  "}";
-        return str;
-    }
+    public DateLessonsHomeworkDb DateLessonsHomework { get; set; }
 }

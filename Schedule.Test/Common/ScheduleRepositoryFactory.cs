@@ -12,14 +12,7 @@ public class ScheduleRepositoryFactory
 {
     public static Guid IdForDelete = Guid.NewGuid();
     public static Guid IdForUpdate = Guid.NewGuid();
-
-    /*public static IRepository CreateRepository()
-    {
-        var db = CreateDbContext();
-        var mapper = CreateMapper();
-
-        return new ScheduleRepository(db, mapper);
-    }*/
+    public static DateTime DateForGet = DateTime.Now;
 
     internal static IDateLessonsHomeworkDbContext CreateDbContext()
     {
@@ -112,21 +105,19 @@ public class ScheduleRepositoryFactory
             new DateLessonsHomeworkDb()
             {
                 Id = Guid.Parse("26e40f10-d23d-4f1b-a884-68d9d92aa24b"),
-                Day = DateTime.Today,
+                Day = DateForGet,
                 DataDlh = new List<LessonHomeworkDb>()
                 {
                     new LessonHomeworkDb()
                     {
                         Id = Guid.NewGuid(),
-                        DateId = Guid.Parse("26e40f10-d23d-4f1b-a884-68d9d92aa24b"),
-                        Lesson = "Lesson 2",
+                        Lesson = "GetLesson 2",
                         Homework = "HomeWork 2",
                         NumberLesson = 2
                     },
                     new LessonHomeworkDb()
                     {
                         Id = Guid.NewGuid(),
-                        DateId = Guid.Parse("26e40f10-d23d-4f1b-a884-68d9d92aa24b"),
                         Lesson = "Lesson 5",
                         Homework = "HomeWork 5",
                         NumberLesson = 5

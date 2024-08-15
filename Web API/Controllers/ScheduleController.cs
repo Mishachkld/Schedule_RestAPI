@@ -31,4 +31,20 @@ public class ScheduleController : Controller
         var itemByTime = await _repository.GetByDate(date);
         return Ok(itemByTime);
     }
+    
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] DateLessonsHomeworkWebDto updateItem)
+    {
+        await _repository.Update(updateItem);
+        return NoContent();
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete([FromBody] Guid deleteUser)
+    {
+        await _repository.Delete(deleteUser);
+        return NoContent();
+    }
+
+    
 }

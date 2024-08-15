@@ -1,6 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Schedule.Application.Dto;
 using Schedule.Application.Dto.WebDto;
+using Schedule.Application.Exceptions;
 using Schedule.Application.Interfaces;
 using Schedule.Application.Schedule.Mapper;
 
@@ -32,17 +35,19 @@ public class ScheduleRepository : IRepository
         return dbEntity.Id;
     }
 
-    public async Task<List<DateLessonsHomeworkWebDto>> GetByDate(DateTime time)
+    public async Task<DateLessonsHomeworkWebDto> GetByDate(DateTime time)
     {
         // todo нужно переделать, т.к. вытасиквается вся БД, а нам нужно сначала отобрать нужные элементы, а потом уже их вытягивать из БД
-        var allItemsFromDb = await _dbContext.Dates.Include(dlhDb => dlhDb.DataDlh)
-            .Where(dlhDto => dlhDto.Day.Equals(time)).ToListAsync();
-        List<DateLessonsHomeworkWebDto> dlhWeb = null;
-        if (allItemsFromDb != null)
+        var allItemsFromDb = await _dbContext.Dates
+            .Include(dlhDb => dlhDb.DataDlh)
+            .FirstOrDefaultAsync(dlhDto => dlhDto.Day.Equals(time))
+            ;
+        if (allItemsFromDb == null)
         {
-            dlhWeb = IMapWith.WebDtoList(_mapper, allItemsFromDb);
+            throw new NotFoundException(nameof(DateLessonsHomeworkDb));
         }
 
+        var dlhWeb = IMapWith.WebDto(_mapper, allItemsFromDb);
         return dlhWeb;
     }
 
@@ -50,17 +55,40 @@ public class ScheduleRepository : IRepository
     {
         var getItemFromDb = await _dbContext.Dates.Include(dlhDb => dlhDb.DataDlh)
             .FirstOrDefaultAsync(key => key.Id == guid);
+        if (getItemFromDb == null || getItemFromDb.Id != guid)
+        {
+            throw new NotFoundException(nameof(DateLessonsHomeworkDb));
+        }
 
         return IMapWith.WebDto(_mapper, getItemFromDb);
     }
 
-    public void Update(DateLessonsHomeworkWebDto updateItem)
+    public async Task Update(DateLessonsHomeworkWebDto updateItem)
     {
-        // TODO
+        var updateItemDb = await _dbContext.Dates
+            .FirstOrDefaultAsync(dlh => dlh.Id == updateItem.Id);
+        if (updateItemDb == null || !updateItemDb.Id.Equals(updateItem.Id)) 
+        {
+            throw new NotFoundException(nameof(DateLessonsHomeworkDb));
+        }
+
+        var updatedItem = IMapWith.DbDto(_mapper, updateItem);
+        updateItemDb.Day = updatedItem.Day; // todo ВОПРОС нужно как-то здесь поменять логику обновления 
+        updateItemDb.DataDlh = updatedItem.DataDlh;
+        _dbContext.Dates.Update(updateItemDb);
+        await _dbContext.SaveChangesAsync(CancellationToken.None);
     }
 
-    public void Delete(DateLessonsHomeworkWebDto deleteItem)
+    public async Task Delete(Guid deleteId)
     {
-        // TODO
+        var deletedUser = await _dbContext.Dates
+            .FirstOrDefaultAsync(dlh => dlh.Id.Equals(deleteId));
+        if (deletedUser == null || !deletedUser.Id.Equals(deleteId))
+        {
+            throw new NotFoundException(nameof(DateLessonsHomeworkDb));
+        }
+
+        _dbContext.Dates.Remove(deletedUser);
+        await _dbContext.SaveChangesAsync(CancellationToken.None);
     }
 }
